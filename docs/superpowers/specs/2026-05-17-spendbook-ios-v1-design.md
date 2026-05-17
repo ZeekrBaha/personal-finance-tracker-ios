@@ -280,7 +280,7 @@ Prisma serializes `Decimal` as a JSON string (`"302.45"`). Swift's `Decimal` doe
 Three additive changes to the existing `personal-finance-tracker` repo. None break the web UI (which reads via server components, bypassing the HTTP API).
 
 ### Change 1 — Bearer token middleware
-New file `src/lib/auth.ts`:
+New file `src/lib/api-auth.ts` (separate from the existing `src/lib/auth.ts`, which holds `getCurrentUserId()`):
 ```ts
 export function requireApiToken(req: Request): Response | null {
   const expected = process.env.API_TOKEN;
@@ -290,6 +290,10 @@ export function requireApiToken(req: Request): Response | null {
   return null;
 }
 ```
+
+Also: existing `POST /api/transactions` and `PATCH /api/transactions/[id]` currently return `amount` as a JS number. Change them (and their tests) to return `amount` as a string so iOS has one consistent `Decimal`-decoding rule across every endpoint. Web UI is unaffected (it reads via server components, not these routes).
+
+Note: amounts are stored **positive** in the DB (spending = positive value, filtered by `amount > 0` in the dashboard query). The iOS UI prepends a `-` for display only; wire format stays positive.
 
 Applied to:
 - `POST /api/transactions`
