@@ -1,0 +1,40 @@
+# macOS
+.DS_Store
+
+# Xcode user-specific & build artifacts
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Package.resolved
+
+# CocoaPods (not used in v1, but guard anyway)
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.json
+GoogleService-Info.plist
+
+# IDE
+.vscode/
+.idea/
+
+# OS / editor
+*.swp
+*~
